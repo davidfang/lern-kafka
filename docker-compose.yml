@@ -130,4 +130,17 @@ services:
       - KAFKA_BROKER_ID=3
     volumes:
       - /home/service/data/kafka3/kafka/kraft:/bitnami/kafka
-
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    networks:
+      - mykafkanetwork
+    restart: always
+    ports:
+      - 8088:8080
+    volumes:
+      - ./config/kafka-ui/localtime:/etc/localtime
+    environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka11:9092,kafka22:9092,kafka33:9092
